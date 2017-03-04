@@ -5,11 +5,12 @@ var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
 
 var phrases = ['Liverpool', 'Barcelona' , 'AC Milan'];
 $(document).ready(function(){
-
+  var $phrase = $('<p></p>');
+  var number = 0 + Math.floor(Math.random() * 3);
+  $phrase.append(phrases[number]);
+  $('.phrase').append($phrase);
 
 });
-
-
 
 $(document).ready(function(){
   for (var i = 0; i < alphabet.length; i++) {
