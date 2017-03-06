@@ -5,19 +5,34 @@ var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
 
 var phrases = ['Liverpool', 'Barcelona' , 'AC Milan'];
 $(document).ready(function(){
-  var $phrase = $('<p></p>');
+  var $phraseContent = $('<li></li>');
   var number = 0 + Math.floor(Math.random() * 3);
-  $phrase.append(phrases[number]);
-  $('.phrase').append($phrase);
+  $phraseContent.append(phrases[number]);
+  var phraseArray = phrases[number].split('');
+  console.log(phraseArray);
+  for (var i = 0; i < phraseArray.length; i++){
+    $('.phrase').append('_ ');
+  }
+  $('.phrase').append($phraseContent);
 
 });
 
+function clickLetter(){
+
+};
+
+
 $(document).ready(function(){
   for (var i = 0; i < alphabet.length; i++) {
-    var $letterButton = $('<button></button>');
-    $letterButton.append(alphabet[i]);
-    $('.btn-group').append($letterButton);
+    var letterButton = $('<button></button>');
+    letterButton.append(alphabet[i]);
+    letterButton.prop('value', alphabet[i]);
+    $('.btn-group').append(letterButton);
   }
+  $('button').click(function() {
+    $('.usedLetters').append($(this).val());
+
+  });
 });
 
 
