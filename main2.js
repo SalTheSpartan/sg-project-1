@@ -1,9 +1,9 @@
 $(document).ready(function(){
-  var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-    'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-    't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  var alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+    'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+    'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
-  var phrases = ['Liverpool', 'Barcelona' , 'Inter Milan'];
+  var phrases = ['LIVERPOOL', 'BARCELONA' , 'INTER MILAN'];
   var blankField = [];
 
   function phraseGenerator(){
@@ -23,7 +23,7 @@ $(document).ready(function(){
   }
 
   var phraseArray = phraseGenerator();
-  console.log(phraseArray[6]);
+
 
   function buttonGenerator(){
     for (var i = 0; i < alphabet.length; i++) {
@@ -39,12 +39,17 @@ $(document).ready(function(){
 
   buttonGenerator();
 
+  function remainigGuesses(){
+    
+  }
+
   function guessPhrase(phraseArray, numberOfGuesses){
 
     $('button').click(function() {
       // $('.usedLetters').append($(this).val());
       numberOfGuesses -= 1;
       console.log(numberOfGuesses);
+      if (numberOfGuesses > 0){
       for (var i = 0; i < phraseArray.length; i++){
         if ($(this).val() === phraseArray[i]){
           console.log(phraseArray[i]);
@@ -52,7 +57,10 @@ $(document).ready(function(){
           $('.phrase').html('<span>' + blankField + '</span>');
 
         }
-      }
+      } // end of for loop
+    }else{
+      console.log('game over');
+    }
     });
 
   }
