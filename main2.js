@@ -4,6 +4,7 @@ $(document).ready(function(){
     't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
   var phrases = ['Liverpool', 'Barcelona' , 'Inter Milan'];
+  var blankField = [];
 
   function phraseGenerator(){
     var $phraseContent = $('<li></li>');
@@ -12,13 +13,17 @@ $(document).ready(function(){
     var phraseArray = phrases[number].split('');
     console.log(phraseArray);
     for (var i = 0; i < phraseArray.length; i++){
-      $('.phrase').append('_ ');
+
+      blankField.push('_');
+      $('.phrase').html('<span>' + blankField + '</span>');
+
     }
     $('.phrase').append($phraseContent);
     return phraseArray;
   }
 
   var phraseArray = phraseGenerator();
+  console.log(phraseArray[6]);
 
   function buttonGenerator(){
     for (var i = 0; i < alphabet.length; i++) {
@@ -34,18 +39,24 @@ $(document).ready(function(){
 
   buttonGenerator();
 
-  function buttonValue(){
+  function guessPhrase(phraseArray, numberOfGuesses){
+
     $('button').click(function() {
-      $('.usedLetters').append($(this).val());
+      // $('.usedLetters').append($(this).val());
+      numberOfGuesses -= 1;
+      console.log(numberOfGuesses);
       for (var i = 0; i < phraseArray.length; i++){
         if ($(this).val() === phraseArray[i]){
           console.log(phraseArray[i]);
+          blankField[i] = phraseArray[i];
+          $('.phrase').html('<span>' + blankField + '</span>');
+
         }
       }
     });
 
   }
 
-  buttonValue();
+  guessPhrase(phraseArray, 10);
 
 });
