@@ -39,9 +39,12 @@ $(document).ready(function(){
     console.log(phraseArray);
     for (var i = 0; i < phraseArray.length; i++){
 
-      blankField.push('_');
-      $('.phrase').html('<span>' + blankField + '</span>');
-
+      if (phraseArray[i] !== ' '){
+        blankField.push('_');
+      }else{
+        blankField.push(' ');
+      }
+        $('.phrase').html('<span>' + blankField + '</span>');
     }
     // $('.phrase').append($phraseContent);
     return phraseArray;
