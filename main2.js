@@ -40,13 +40,14 @@ $(document).ready(function(){
   buttonGenerator();
 
   function remainigGuesses(){
-    
+    // $('.usedLetters').append($(this).val());
   }
 
   function guessPhrase(phraseArray, numberOfGuesses){
 
     $('button').click(function() {
-      // $('.usedLetters').append($(this).val());
+      $(this).attr('disabled', true);
+      $(this).css('border', '1px solid red');
       numberOfGuesses -= 1;
       console.log(numberOfGuesses);
       if (numberOfGuesses > 0){
