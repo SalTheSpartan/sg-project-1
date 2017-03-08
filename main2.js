@@ -9,10 +9,10 @@ $(document).ready(function(){
   var peoplePhrases = ['JAMES COLAIRO', 'SALMAN KHAN', 'OSVALDO CALIARI'];
   var phrases = [];
   var blankField = [];
-  var solveButton = false;
+
 
   function updateBlankField(arrayOfStrings) {
-    $('.phrase').html('<span>' + arrayOfStrings.join(' ') + '</span>');
+    $('.phrase').html('<span>' + arrayOfStrings.join('&nbsp') + '</span>');
   }
 
   function categoryGenerator(){
@@ -48,7 +48,7 @@ $(document).ready(function(){
       if (phraseArray[i] !== ' '){
         blankField.push('_');
       }else{
-        blankField.push('&nbsp;');
+        blankField.push(' ');
       }
       updateBlankField(blankField);
     }
@@ -72,10 +72,15 @@ $(document).ready(function(){
 
   buttonGenerator();
 
-  function guessCounter(remainingGuesses){
 
-    var guessWrapper = $('<h3>'+ 'Attempts Remaining ' + remainingGuesses + '<h3>');
-    $('.guessCounter').html(guessWrapper);
+  function guessCounter(remainingGuesses){
+    if (remainingGuesses > 0){
+      var guessWrapper = $('<h3>'+ 'Attempts Remaining ' + remainingGuesses + '<h3>');
+      $('.guessCounter').html(guessWrapper);
+    }else{
+      guessWrapper = $('<h3>'+ 'Attempts Remaining 0 Please Solve Phrase<h3>');
+      $('.guessCounter').html(guessWrapper);
+    }
 
   }
 
@@ -88,12 +93,12 @@ $(document).ready(function(){
       numberOfGuesses -= 1;
       guessCounter(numberOfGuesses);
       console.log(numberOfGuesses);
-      var test = isPhraseSolved(phraseArray, blankField);
-      if (numberOfGuesses >= 1 && solveButton === false && !(test)){
+      var solved = isPhraseSolved(phraseArray, blankField);
+      if (numberOfGuesses >= 0 && !(solved)){
         guessAttempt(val1, phraseArray, blankField);
       }else {
         solve(val1, phraseArray, blankField);
-        $('.guessCounter').html('No guesses Remaining, Please Solve Phrase');
+
 
       }
 
@@ -116,21 +121,27 @@ $(document).ready(function(){
   }
 
   function solve(val1, phraseArray, blankField){
-
+// returns -1
     console.log('solve test');
-    var inArray = $.inArray(val1, phraseArray);
+    var inArray = $.inArray(val1, phraseArray);// returns -1
     console.log(inArray);
+    if (inArray > 0){
 
-    for (var i = 0; i < phraseArray.length; i++){
-      if (val1 === phraseArray[i]){
-          // console.log(phraseArray[i]);
-        blankField[i] = phraseArray[i];
-        updateBlankField(blankField);
-      } else {
-      // console.log('solve else test');
-        $('.letterButton').attr('disabled', true);
-        $('.guessCounter').html('You Lose, Loser!!!');
+      for (var i = 0; i < phraseArray.length; i++){
+        if (val1 === phraseArray[i]){
+          blankField[i] = phraseArray[i];
+          console.log(phraseArray[i]);
+          console.log(val1 + 'testing');
+        // blankField[i] = phraseArray[i];
+          updateBlankField(blankField);
+          isPhraseSolved(phraseArray, blankField);
+        }
       }
+    }else { //change to else if
+      console.log('solve else test');
+      $('.letterButton').attr('disabled', true);
+      $('.outcome').html('You Lose, Loser!!!');
+      updateBlankField(phraseArray);
     }
   }
 
@@ -141,7 +152,7 @@ function isPhraseSolved(phraseArray, blankField){
 
   if (JSON.stringify(phraseArray)===JSON.stringify(blankField)){
     $('.letterButton').attr('disabled', true);
-    $('.guessCounter').html('Congratulations You Win!!!');
+    $('.outcome').html('Congratulations You Win!!!');
     return true;
   }
 }

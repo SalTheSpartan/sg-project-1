@@ -43,6 +43,12 @@ h1 h2 h3 {
    font-weight:bold;
 }
 
+.outcome {
+  font-family: helvetica;
+  font-size: 60px;
+  color: blue;
+}
+
 .letter {
   z-index: 3;
   height: 100px;
