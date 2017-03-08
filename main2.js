@@ -11,6 +11,10 @@ $(document).ready(function(){
   var blankField = [];
   var solveButton = false;
 
+  function updateBlankField(arrayOfStrings) {
+    $('.phrase').html('<span>' + arrayOfStrings.join(' ') + '</span>');
+  }
+
   function categoryGenerator(){
     var category = categories[Math.floor(Math.random() * categories.length)];
     $('#category').append(category);
@@ -44,9 +48,9 @@ $(document).ready(function(){
       if (phraseArray[i] !== ' '){
         blankField.push('_');
       }else{
-        blankField.push(' ');
+        blankField.push('&nbsp;');
       }
-      $('.phrase').html('<span>' + blankField + '</span>');
+      updateBlankField(blankField);
     }
     // $('.phrase').append($phraseContent);
     return phraseArray;
@@ -70,7 +74,7 @@ $(document).ready(function(){
 
   function guessCounter(remainingGuesses){
 
-    var guessWrapper = $('<h3>'+ remainingGuesses + '<h3>');
+    var guessWrapper = $('<h3>'+ 'Attempts Remaining ' + remainingGuesses + '<h3>');
     $('.guessCounter').html(guessWrapper);
 
   }
@@ -89,6 +93,8 @@ $(document).ready(function(){
         guessAttempt(val1, phraseArray, blankField);
       }else {
         solve(val1, phraseArray, blankField);
+        $('.guessCounter').html('No guesses Remaining, Please Solve Phrase');
+
       }
 
     });
@@ -98,38 +104,34 @@ $(document).ready(function(){
   guessPhrase(phraseArray, 10);
 
   function guessAttempt(val1, phraseArray, blankField){
-
-
     for (var i = 0; i < phraseArray.length; i++){
       if (val1 === phraseArray[i]){
         console.log(phraseArray[i]);
         blankField[i] = phraseArray[i];
-        $('.phrase').html('<span>' + blankField + '</span>');
+        updateBlankField(blankField);
         console.log(blankField);
       }
     }
     isPhraseSolved(phraseArray, blankField);
   }
 
-
-
   function solve(val1, phraseArray, blankField){
+
     console.log('solve test');
     var inArray = $.inArray(val1, phraseArray);
     console.log(inArray);
-    $('.guessCounter').html('No guesses Remaining, Please Solve Phrase');
-      // for (var i = 0; i < phraseArray.length; i++){
-    if (val1 === phraseArray[inArray]){
+
+    for (var i = 0; i < phraseArray.length; i++){
+      if (val1 === phraseArray[i]){
           // console.log(phraseArray[i]);
-      blankField[inArray] = phraseArray[inArray];
-      $('.phrase').html('<span>' + blankField + '</span>');
-
-    }else{
+        blankField[i] = phraseArray[i];
+        updateBlankField(blankField);
+      } else {
       // console.log('solve else test');
-      $('.letterButton').attr('disabled', true);
-      $('.guessCounter').html('You Lose, Loser!!!');
+        $('.letterButton').attr('disabled', true);
+        $('.guessCounter').html('You Lose, Loser!!!');
+      }
     }
-
   }
 
 });
