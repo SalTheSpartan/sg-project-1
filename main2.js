@@ -6,9 +6,10 @@ $(document).ready(function(){
   var categories = ['FOOTBALL TEAMS', 'MOVIES', 'PEOPLE'];
   var footballPhrases = ['LIVERPOOL', 'BARCELONA' , 'INTER MILAN'];
   var moviePhrases = ['LOGAN', 'SEABISCUIT', 'THE PURSUIT OF HAPPYNESS'];
-  var peoplePhrases = ['JAMES COLAIRO', 'SALMAN KHAN', 'OSVALDO CALIERI'];
+  var peoplePhrases = ['JAMES COLAIRO', 'SALMAN KHAN', 'OSVALDO CALIARI'];
   var phrases = [];
   var blankField = [];
+  var solveButton = false;
 
   function categoryGenerator(){
     var category = categories[Math.floor(Math.random() * categories.length)];
@@ -31,6 +32,7 @@ $(document).ready(function(){
   }
 
   categoryGenerator();
+
   function phraseGenerator(){
     var $phraseContent = $('<li></li>');
     var number = 0 + Math.floor(Math.random() * phrases.length);
@@ -44,7 +46,7 @@ $(document).ready(function(){
       }else{
         blankField.push(' ');
       }
-        $('.phrase').html('<span>' + blankField + '</span>');
+      $('.phrase').html('<span>' + blankField + '</span>');
     }
     // $('.phrase').append($phraseContent);
     return phraseArray;
@@ -78,26 +80,66 @@ $(document).ready(function(){
     $('.letterButton').click(function() {
       $(this).attr('disabled', true);
       $(this).css('border', '1px solid red');
+      var val1 = $(this).val();
       numberOfGuesses -= 1;
       guessCounter(numberOfGuesses);
       console.log(numberOfGuesses);
-      if (numberOfGuesses >= 0){
-        for (var i = 0; i < phraseArray.length; i++){
-          if ($(this).val() === phraseArray[i]){
-            console.log(phraseArray[i]);
-            blankField[i] = phraseArray[i];
-            $('.phrase').html('<span>' + blankField + '</span>');
-
-          }
-        } // end of for loop
-      }else{
-        console.log('game over');
-        guessCounter('You Lose, Loser!');
+      var test = isPhraseSolved(phraseArray, blankField);
+      if (numberOfGuesses >= 1 && solveButton === false && !(test)){
+        guessAttempt(val1, phraseArray, blankField);
+      }else {
+        solve(val1, phraseArray, blankField);
       }
+
     });
 
   }
 
   guessPhrase(phraseArray, 10);
 
+  function guessAttempt(val1, phraseArray, blankField){
+
+
+    for (var i = 0; i < phraseArray.length; i++){
+      if (val1 === phraseArray[i]){
+        console.log(phraseArray[i]);
+        blankField[i] = phraseArray[i];
+        $('.phrase').html('<span>' + blankField + '</span>');
+        console.log(blankField);
+      }
+    }
+    isPhraseSolved(phraseArray, blankField);
+  }
+
+
+
+  function solve(val1, phraseArray, blankField){
+    console.log('solve test');
+    var inArray = $.inArray(val1, phraseArray);
+    console.log(inArray);
+    $('.guessCounter').html('No guesses Remaining, Please Solve Phrase');
+      // for (var i = 0; i < phraseArray.length; i++){
+    if (val1 === phraseArray[inArray]){
+          // console.log(phraseArray[i]);
+      blankField[inArray] = phraseArray[inArray];
+      $('.phrase').html('<span>' + blankField + '</span>');
+
+    }else{
+      // console.log('solve else test');
+      $('.letterButton').attr('disabled', true);
+      $('.guessCounter').html('You Lose, Loser!!!');
+    }
+
+  }
+
 });
+
+function isPhraseSolved(phraseArray, blankField){
+
+
+  if (JSON.stringify(phraseArray)===JSON.stringify(blankField)){
+    $('.letterButton').attr('disabled', true);
+    $('.guessCounter').html('Congratulations You Win!!!');
+    return true;
+  }
+}
