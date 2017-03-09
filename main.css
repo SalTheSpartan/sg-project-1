@@ -13,9 +13,12 @@ h1 h2 h3 {
 
   margin: 0 auto;
 
-
-
   }
+
+#playAgain {
+    margin-top: 20px;
+  }
+
  body {
    background-image: url(background.jpeg);
    overflow: hidden;
@@ -94,7 +97,8 @@ h1 h2 h3 {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border: 5px;
+    margin-top: 10px;
+
 }
 
 /* The actual popup */

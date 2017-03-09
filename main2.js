@@ -6,7 +6,7 @@ $(document).ready(function(){
   var categories = ['FOOTBALL TEAMS', 'MOVIES', 'PEOPLE'];
   var footballPhrases = ['LIVERPOOL', 'BARCELONA' , 'INTER MILAN'];
   var moviePhrases = ['LOGAN', 'SEABISCUIT', 'THE PURSUIT OF HAPPYNESS'];
-  var peoplePhrases = ['JAMES COLAIRO', 'SALMAN KHAN', 'OSVALDO CALIARI'];
+  var peoplePhrases = ['TOM HARDY', 'ALICIA KEYS', 'ALBERT EINSTEIN'];
   var phrases = [];
   var blankField = [];
 
