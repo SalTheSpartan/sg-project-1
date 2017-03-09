@@ -57,7 +57,7 @@ h1 h2 h3 {
   position: absolute;
   filter: blur(.3em);
   top: -100px;
-  animation: letter-fall 7s ease-in-out 0s
+  animation: letter-fall 7s ease-in-out 0s infinite
 }
 
 .letterA {
